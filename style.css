@@ -1,0 +1,88 @@
+/* CSS 管外观。先不必记住所有规则，认识它控制哪一块即可。 */
+:root {
+  --page: #f5f4ef;
+  --card: #ffffff;
+  --text: #24382f;
+  --muted: #6d7870;
+  --accent: #3f7054;
+  --line: #dfe5dc;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  line-height: 1.7;
+}
+.workspace { width: min(100% - 40px, 760px); margin: 72px auto 40px; }
+.lesson { color: var(--accent); font-size: 13px; letter-spacing: 2px; }
+h1 { margin: 15px 0 8px; font-size: clamp(30px, 5vw, 44px); letter-spacing: -1px; }
+.intro { margin: 0; color: var(--muted); }
+.task-card {
+  margin-top: 32px;
+  padding: 32px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px #24382f06;
+}
+.card-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 25px; }
+h2 { margin: 0; font-size: 19px; }
+.status { padding: 3px 10px; border-radius: 20px; background: #eef4ec; color: var(--accent); font-size: 12px; white-space: nowrap; }
+label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.input-row { display: flex; gap: 10px; }
+input, button { font: inherit; border-radius: 9px; }
+input { width: 100%; min-width: 0; border: 1px solid #cbd5c9; padding: 12px 14px; color: var(--text); background: #fff; }
+input::placeholder { color: #8a958d; }
+input:focus-visible { outline: 3px solid #a8c9ae; outline-offset: 2px; }
+button { flex: 0 0 auto; border: 0; padding: 12px 19px; background: var(--accent); color: white; }
+button:disabled { background: #dfe8de; color: #53694f; cursor: not-allowed; }
+.hint { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+.empty-state { margin-top: 30px; padding: 37px 12px 22px; border-top: 1px solid var(--line); text-align: center; }
+.empty-mark { display: inline-grid; place-items: center; width: 42px; height: 42px; border: 1px solid #d5e2d3; border-radius: 50%; color: var(--accent); font-size: 21px; }
+h3 { margin: 13px 0 5px; font-size: 17px; font-weight: 500; }
+.empty-state p { margin: 0; color: var(--muted); font-size: 13px; }
+footer { margin-top: 23px; text-align: center; color: var(--muted); font-size: 12px; }
+/* 小屏幕下，输入框和按钮改为上下排列。 */
+@media (max-width: 520px) {
+  .workspace { margin-top: 40px; }
+  .task-card { padding: 22px; }
+  .input-row { flex-direction: column; }
+  button { width: 100%; }
+}
+
+/* 第二课：任务列表。hidden 属性由 JavaScript 切换。 */
+[hidden] { display: none !important; }
+.task-list { list-style: none; padding: 0; margin: 26px 0 0; border-top: 1px solid var(--line); }
+.task-item { padding: 15px 4px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+button:not(:disabled) { cursor: pointer; }
+button:not(:disabled):hover { background: #315c42; }
+button:focus-visible { outline: 3px solid #a8c9ae; outline-offset: 3px; }
+
+/* 第三课：复选框控制状态，CSS 类名控制外观。 */
+.task-label { display: flex; align-items: flex-start; gap: 12px; margin: 0; font-size: 16px; font-weight: 400; cursor: pointer; }
+.task-checkbox { flex: 0 0 18px; width: 18px; height: 18px; padding: 0; margin: 5px 0 0; accent-color: var(--accent); cursor: pointer; }
+.task-text { min-width: 0; overflow-wrap: anywhere; }
+.task-item.is-completed .task-text { text-decoration: line-through; color: var(--muted); }
+
+/* 第四课：任务文字和删除按钮并排，小屏幕也保留独立按钮。 */
+.task-item { display: flex; align-items: flex-start; gap: 12px; }
+.task-label { flex: 1; min-width: 0; }
+.delete-button { width: auto; padding: 5px 10px; border: 1px solid #e7d7d2; background: transparent; color: #8b4035; font-size: 13px; }
+.delete-button:not(:disabled):hover { background: #faf0ed; }
+
+/* 第五课：aria-pressed 表示当前选中的筛选按钮。 */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.filter-button { width: auto; padding: 7px 14px; background: transparent; border: 1px solid var(--line); color: var(--text); font-size: 14px; }
+.filter-button[aria-pressed="true"] { background: var(--accent); color: white; border-color: var(--accent); }
+.filter-button:not(:disabled):hover { background: #edf3eb; color: var(--text); }
+.filter-button[aria-pressed="true"]:hover { background: #315c42; color: white; }
+
+/* 第七课：备份操作和导入确认。 */
+.backup-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.backup-bar button { width: auto; font-size: 13px; padding: 8px 12px; }
+.backup-button { color: var(--accent); background: transparent; border: 1px solid var(--line); }
+.backup-button:not(:disabled):hover { background: #edf3eb; }
+.import-confirmation { padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.import-confirmation p { font-size: 14px; }
