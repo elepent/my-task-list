@@ -1,3 +1,18 @@
+// 固定使用北京时间；设备处于其他时区时也显示同一个日期。
+const beijingDate = document.querySelector('#beijing-date');
+const beijingDateFormatter = new Intl.DateTimeFormat('zh-CN', {
+  timeZone: 'Asia/Shanghai', year: 'numeric', month: 'long', day: 'numeric',
+});
+function updateBeijingDate() {
+  beijingDate.textContent = `北京时间 ${beijingDateFormatter.format(new Date())}`;
+}
+updateBeijingDate();
+// 页面跨午夜保持打开时，也会更新日期。
+setInterval(updateBeijingDate, 60000);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) updateBeijingDate();
+});
+
 // 1. 找到页面上需要操作的元素。
 const form = document.querySelector('#task-form');
 const input = document.querySelector('#task-input');
